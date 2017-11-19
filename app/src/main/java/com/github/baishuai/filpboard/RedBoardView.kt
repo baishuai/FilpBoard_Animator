@@ -88,8 +88,8 @@ class RedBoardView : View {
     }
 
     fun setImageDrawable(drawable: Drawable) {
-        val oldWidth = mDrawableWidth;
-        val oldHeight = mDrawableHeight;
+        val oldWidth = mDrawableWidth
+        val oldHeight = mDrawableHeight
         updateDrawable(drawable)
         if (oldWidth != mDrawableWidth || oldHeight != mDrawableHeight) {
             requestLayout()
@@ -115,32 +115,29 @@ class RedBoardView : View {
         val contentHeight = width - pTop - pBottom
         val centerX = contentWidth / 2
         val centerY = contentHeight / 2
-        val x = centerX - mDrawableWidth / 2
-        val y = centerY - mDrawableHeight / 2
-        mImage.setBounds(x, y, x + mDrawableWidth, y + mDrawableHeight)
+
+        canvas.translate(centerX.toFloat(), centerY.toFloat())
+        mImage.setBounds(-mDrawableWidth / 2, -mDrawableHeight / 2, mDrawableWidth / 2, mDrawableHeight / 2)
+
 
         canvas.save()
         camera.save()
-        canvas.translate(centerX.toFloat(), centerY.toFloat())
         canvas.rotate(rotateR)
         canvas.clipRect(-centerX, -centerY, 0, centerY)
         camera.rotateY(-degreeL)
         camera.applyToCanvas(canvas)
         canvas.rotate(-rotateR)
-        canvas.translate(-centerX.toFloat(), -centerY.toFloat())
         mImage.draw(canvas)
         camera.restore()
         canvas.restore()
 
         canvas.save()
         camera.save()
-        canvas.translate(centerX.toFloat(), centerY.toFloat())
         canvas.rotate(rotateR)
         canvas.clipRect(0, -centerY, centerX, centerY)
-        camera.rotateY(degreeY)
+        camera.rotateY( degreeY)
         camera.applyToCanvas(canvas)
         canvas.rotate(-rotateR)
-        canvas.translate(-centerX.toFloat(), -centerY.toFloat())
         mImage.draw(canvas)
         camera.restore()
         canvas.restore()
